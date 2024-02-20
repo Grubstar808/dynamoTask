@@ -5,13 +5,16 @@ const db = CyclicDB(process.env.CYCLIC_DB);
 let contentdb = db.collection("content");
 
 router.post("/", async function (req, res, next) {
-  const { content } = req.body;
-  await contentdb.set(Content, content);
-  res.end();
+  console.log(req.body);
+  const { Content } = req.body;
+  await contentdb.set("Content", {
+    result: Content,
+  });
 });
 
 router.get("/", async function (req, res, next) {
-  let list = await contentdb.list();
+  let list = await contentdb.get("Content");
+  console.log(list);
   res.send(list);
 });
 
